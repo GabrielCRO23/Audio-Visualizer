@@ -1,3 +1,55 @@
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
+ctx.fillStyle = "red";
+ctx.beginPath();
+ctx.arc(10, 75, 10, 0, 2 * Math.PI); //x, y, radius, start angle, end angle
+ctx.stroke();
+ctx.fill(); //fills circle with fillStyle color
+
+ctx.beginPath();
+ctx.arc(30, 75, 10, 0, 2 * Math.PI); //x, y, radius, start angle, end angle
+ctx.stroke();
+ctx.fill();
+
+ctx.arc(50, 75, 10, 0, 2 * Math.PI); //x, y, radius, start angle, end angle
+ctx.stroke();
+ctx.fill();
+
+/*
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
+ctx.beginPath();
+ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+ctx.stroke();
+*/
+/*
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const radius = 70;
+
+class Particle {
+  constructor() {
+    this.particleWidth = 100;
+    this.particleHeight = 100;
+    this.x = canvas.width / 2;
+    this.y = canvas.height / 2;
+    this.directionY; // = data goes here
+  }
+}
+
+ctx.beginPath();
+ctx.arc(Particle.x, Particle.y, radius, 0, 2 * Math.PI, false);
+ctx.fillStyle = "green";
+ctx.fill();
+ctx.lineWidth = 5;
+ctx.strokeStyle = "#003300";
+ctx.stroke();
+*/
+
+/*
 let audio1 = new Audio();
 audio1.src = "mao.mp3";
 
@@ -35,3 +87,5 @@ function animate() {
 }
 
 animate();
+
+*/
