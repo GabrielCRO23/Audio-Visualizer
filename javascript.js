@@ -26,11 +26,12 @@ let createParticle = function (particle) {
   particle.draw();
 };
 
-for (let i = 0; i < 1; i++) {
-  let random_x = 20 + 1 * i;
-  let random_y = Math.random() * canvas.height;
+for (let i = 0; i < 20; i++) {
+  console.log(i);
+  let x = 20 + 40 * i;
+  let random_y = 500;
 
-  let my_particle = new Particle(random_x, random_y, 20, "white");
+  let my_particle = new Particle(x, random_y, 20, "white");
   particles.push(my_particle);
   createParticle(particles[i]);
 }
