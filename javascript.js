@@ -1,9 +1,45 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-ctx.fillStyle = "red";
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+class Particle {
+  constructor(xLocation, yLocation, radius, color) {
+    this.xLocation = xLocation;
+    this.yLocation = yLocation;
+    this.radius = radius;
+    this.color = color;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.xLocation, this.yLocation, this.radius, 0, 2 * Math.PI); //x location, y location, radius, start angle, end angle
+    ctx.stroke();
+    ctx.fill();
+  }
+}
+
+let particles = [];
+
+let createParticle = function (particle) {
+  particle.draw();
+};
+
+for (let i = 0; i < 1; i++) {
+  let random_x = 20 + 1 * i;
+  let random_y = Math.random() * canvas.height;
+
+  let my_particle = new Particle(random_x, random_y, 20, "white");
+  particles.push(my_particle);
+  createParticle(particles[i]);
+}
+
+/*
+
+ctx.fillStyle = "white";
 ctx.beginPath();
-ctx.arc(10, 75, 10, 0, 2 * Math.PI); //x, y, radius, start angle, end angle
+ctx.arc(10, 75, 10, 0, 2 * Math.PI); //x location, y location, radius, start angle, end angle
 ctx.stroke();
 ctx.fill(); //fills circle with fillStyle color
 
@@ -13,6 +49,14 @@ ctx.stroke();
 ctx.fill();
 
 ctx.arc(50, 75, 10, 0, 2 * Math.PI); //x, y, radius, start angle, end angle
+ctx.stroke();
+ctx.fill();
+
+ctx.arc(70, 75, 10, 0, 2 * Math.PI); //x, y, radius, start angle, end angle
+ctx.stroke();
+ctx.fill();
+
+ctx.arc(90, 75, 10, 0, 2 * Math.PI); //x, y, radius, start angle, end angle
 ctx.stroke();
 ctx.fill();
 
