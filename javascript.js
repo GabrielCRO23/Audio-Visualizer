@@ -4,6 +4,22 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let audio1 = new Audio();
+audio1.src = "mao.mp3";
+audioSource = audioCtx.createMediaElementSource(audio1);
+audio1.play();
+analyser = audioCtx.createAnalyser();
+audioSource.connect(analyser);
+analyser.connect(audioCtx.destination);
+
+analyser.fftSize = 64;
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+//const barWidth = canvas.width / bufferLength;
+console.log(dataArray[0]);
+console.log(canvas.height);
+
 class Particle {
   constructor(xLocation, yLocation, radius, color) {
     this.xLocation = xLocation;
@@ -11,30 +27,56 @@ class Particle {
     this.radius = radius;
     this.color = color;
   }
-  draw() {
+  draw(ctx) {
     ctx.fillStyle = this.color;
     ctx.beginPath();
     ctx.arc(this.xLocation, this.yLocation, this.radius, 0, 2 * Math.PI); //x location, y location, radius, start angle, end angle
     ctx.stroke();
     ctx.fill();
+    ctx.closePath();
+  }
+  update() {
+    analyser.getByteFrequencyData(dataArray);
+    this.yLocation = -dataArray[10] + canvas.height / 2;
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.draw(ctx);
+
+    console.log(dataArray[10]);
   }
 }
 
 let particles = [];
-
 let createParticle = function (particle) {
-  particle.draw();
+  particle.draw(ctx);
+  particle.update();
 };
 
-for (let i = 0; i < 20; i++) {
-  console.log(i);
-  let x = 20 + 40 * i;
-  let random_y = 500;
+/*
 
-  let my_particle = new Particle(x, random_y, 20, "white");
+let x = 100; // let x = 5 + 10 * i;
+let y = canvas.height / 2;
+//console.log(dataArray[0]);
+let speed = dataArray[0];
+let my_particle = new Particle(x, y, 5, "white", 0, 0);
+my_particle.draw(ctx);
+*/
+
+for (let i = 0; i < canvas.width / 10; i++) {
+  //i < canvas.width
+  console.log(i);
+  let x = 5 + 10 * i; // let x = 5 + 10 * i;
+  let y = canvas.height / 2;
+
+  let my_particle = new Particle(x, y, 5, "white"); // let my_particle = new Particle(x, y, 5, "white");
   particles.push(my_particle);
   createParticle(particles[i]);
 }
+
+let updateParticle = function () {
+  requestAnimationFrame(updateParticle);
+};
+
+updateParticle();
 
 /*
 
@@ -97,6 +139,18 @@ ctx.stroke();
 /*
 let audio1 = new Audio();
 audio1.src = "mao.mp3";
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+audio1.play();
+analyser = audioCtx.createAnalyser();
+audioSource.connect(analyser);
+analyser.connect(audioCtx.destination);
+
+analyser.fftSize = 128;
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+const barWidth = canvas.width / bufferLength;
+
+
 
 const container = document.getElementById("container");
 const canvas = document.getElementById("canvas");
